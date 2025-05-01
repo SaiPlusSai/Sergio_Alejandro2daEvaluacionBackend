@@ -1,0 +1,42 @@
+<!-- wsdl/busqueda.wsdl -->
+<definitions name="BusquedaServicio"
+             targetNamespace="http://www.ejemplo.org/busqueda"
+             xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:tns="http://www.ejemplo.org/busqueda"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+  <message name="buscarFraseGoogleRequest">
+    <part name="frase" type="xsd:string"/>
+  </message>
+  <message name="buscarFraseGoogleResponse">
+    <part name="resultado" type="xsd:string"/>
+  </message>
+
+  <portType name="BusquedaPort">
+    <operation name="buscarFraseGoogle">
+      <input message="tns:buscarFraseGoogleRequest"/>
+      <output message="tns:buscarFraseGoogleResponse"/>
+    </operation>
+  </portType>
+
+  <binding name="BusquedaBinding" type="tns:BusquedaPort">
+    <soap:binding style="rpc"
+                  transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="buscarFraseGoogle">
+      <soap:operation soapAction="buscarFraseGoogle"/>
+      <input>
+        <soap:body namespace="http://www.ejemplo.org/busqueda" use="literal"/>
+      </input>
+      <output>
+        <soap:body namespace="http://www.ejemplo.org/busqueda" use="literal"/>
+      </output>
+    </operation>
+  </binding>
+
+  <service name="BusquedaServicio">
+    <port name="BusquedaPort" binding="tns:BusquedaBinding">
+      <soap:address location="http://localhost:8001/wsdl"/>
+    </port>
+  </service>
+</definitions>
